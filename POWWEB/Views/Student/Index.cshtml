@@ -1,0 +1,37 @@
+﻿@model List<POWWEB.Models.StudentViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastName
+        </th>
+    </tr>
+    <tr>
+        @foreach (var m in Model)
+        {
+            <th>
+                @Html.DisplayTextFor(model => m.Id)
+            </th>
+            <th>
+                @Html.DisplayTextFor(model => m.FirstName)
+            </th>
+            <th>
+                @Html.DisplayTextFor(model => m.LastName)
+            </th>
+        }
+    </tr>
+    </thead>
+</table>
