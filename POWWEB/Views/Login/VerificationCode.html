@@ -1,0 +1,87 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Código de Verificación</title>
+    <link rel="stylesheet" href="../wwwroot/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('../wwwroot/images/background.jpg'); /* Cambia esta ruta según tu imagen */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .logo-box img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-box">
+                <img src="https://www.pngall.com/wp-content/uploads/5/University-PNG-High-Quality-Image.png" alt="Logo Universidad">
+            </div>
+            <h1>Enviar Código de Verificación</h1>
+            <p>Presiona el botón para enviar un código de verificación a tu correo registrado.</p>
+            <form method="post" asp-action="SendVerificationCode">
+                <button type="submit">Enviar Código</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
