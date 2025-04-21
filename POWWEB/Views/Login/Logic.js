@@ -1,40 +1,73 @@
-// Obtén los elementos del formulario y campos
-const loginForm = document.getElementById('loginForm');
-const errorMessage = document.getElementById('error-message');
-const togglePassword = document.getElementById('togglePassword');
-const passwordField = document.getElementById('password');
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
-// Alternar entre mostrar y ocultar la contraseña
-togglePassword.addEventListener('click', () => {
-    const type = passwordField.type === 'password' ? 'text' : 'password';
-    passwordField.type = type;
-    togglePassword.textContent = type === 'password' ? '👁️' : '🙈'; // Cambia el ícono
-});
+public class LoginLogic
+{
+    private readonly HttpClient _httpClient;
 
-// Manejar el envío del formulario
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita el comportamiento predeterminado del formulario
-
-    // Obtén los valores ingresados por el usuario
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    try {
-        // Envía la solicitud al servidor
-        const response = await axios.post('/api/auth/login', { username, password });
-
-        if (response.data.success) {
-            // Si la autenticación es exitosa, redirige al usuario
-            window.location.href = '/home';
-        } else {
-            // Muestra un mensaje de error si las credenciales no son válidas
-            errorMessage.style.display = 'block';
-            errorMessage.textContent = 'Credenciales incorrectas, inténtalo de nuevo.';
-        }
-    } catch (error) {
-        // Maneja errores en la solicitud
-        errorMessage.style.display = 'block';
-        errorMessage.textContent = 'Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo más tarde.';
-        console.error('Error al autenticar:', error);
+    public LoginLogic(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
     }
-});
+
+    // Método para alternar entre mostrar y ocultar la contraseña
+    public string TogglePasswordVisibility(string currentType)
+    {
+        return currentType == "password" ? "text" : "password";
+    }
+
+    // Método para manejar el envío del formulario
+    public async Task<string> SubmitLoginAsync(string username, string password)
+    {
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        {
+            return "Por favor, ingrese usuario y contraseña.";
+        }
+
+        try
+        {
+            // Crea el contenido de la solicitud
+            var loginData = new { username, password };
+            var content = new StringContent(JsonSerializer.Serialize(loginData), Encoding.UTF8, "application/json");
+
+            // Envía la solicitud al servidor
+            var response = await _httpClient.PostAsync("/api/auth/login", content);
+
+            // Procesa la respuesta
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<LoginResponse>(responseBody);
+
+                if (result != null && result.Success)
+                {
+                    return "success"; // Indica que la autenticación fue exitosa
+                }
+                else
+                {
+                    return "Credenciales incorrectas, inténtalo de nuevo.";
+                }
+            }
+            else
+            {
+                return "Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo más tarde.";
+            }
+        }
+        catch (Exception ex)
+        {
+            // Maneja errores en la solicitud
+            Console.WriteLine($"Error al autenticar: {ex.Message}");
+            return "Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo más tarde.";
+        }
+    }
+
+    // Clase para deserializar la respuesta del servidor
+    private class LoginResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
+}
