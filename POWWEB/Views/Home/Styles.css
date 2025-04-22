@@ -14,38 +14,11 @@ aside {
     overflow-y: auto;
 }
 
-/* Estilo para el contenido principal */
-main {
-    flex: 1;
-    position: relative; /* Necesario para posicionar la marca de agua */
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    margin: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-
-/* Marca de agua */
-.watermark {
-    position: absolute;
-    top: 50%; /* Centrado vertical */
-    left: 50%; /* Centrado horizontal */
-    transform: translate(-50%, -50%); /* Ajuste necesario para centrar el logo */
-    opacity: 0.1; /* Marca de agua con baja opacidad */
-    z-index: -1; /* Coloca la marca de agua detrás del contenido */
-}
-
-.watermark img {
-    max-width: 300px; /* Ajusta el tamaño del logo */
-    height: auto;
-}
-
 aside h3 {
     margin: 20px 0 10px 0;
     font-weight: bold;
     font-size: 18px;
-    border-bottom: 2px solid #ccc; /* Línea decorativa debajo del título */
+    border-bottom: 2px solid #ccc;
     padding-bottom: 5px;
 }
 
@@ -72,19 +45,49 @@ aside ul li a {
 
 aside ul li a:hover {
     background-color: #e0e0e0;
-    color: #000; /* Cambia el color del texto al pasar por encima */
+    color: #000;
 }
 
 /* Contenido principal */
 main {
     flex: 1;
+    position: relative;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    background-color: rgba(255, 255, 255, 0.8);
     margin: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
+/* Contenedor del logo y texto */
+.logo-box {
+    display: flex; /* Asegura que el logo y el texto estén alineados horizontalmente */
+    align-items: center; /* Alinea el logo y el texto verticalmente */
+}
+
+.logo-box img {
+    max-width: 50px; /* Establece el ancho máximo del logo */
+    height: auto;    /* Ajusta automáticamente la altura para mantener la proporción */
+    margin-right: 20px; /* Añade un espacio entre el logo y el texto */
+}
+
+/* Marca de agua */
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.watermark img {
+    max-width: 300px;
+    height: auto;
+}
+
+/* Encabezado */
 header {
     display: flex;
     justify-content: space-between;
