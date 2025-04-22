@@ -1,111 +1,94 @@
-.logo-box {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.logo-box img {
-    max-width: 150px;
-    height: auto;
-    border-radius: 10px; 
-}
-
-/* Estilos globales */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('https://radio.uchile.cl/wp-content/uploads/2020/04/universidad-de-chile-e1561592684417.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    position: relative;
-}
-
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-}
-
+/* Estilo para centrar el login-box dentro del contenedor */
 .login-container {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    z-index: 1;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://i0.wp.com/cruce.iteso.mx/wp-content/uploads/2024/01/La-universidad.jpg?fit=1024%2C640&ssl=1');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+/* Asegúrate de que html y body ocupen toda la altura */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para el cuadro de login */
 .login-box {
-    background: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    max-width: 400px;
-    width: 100%;
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #333;
+/* Estilo para la imagen dentro de la logo-box */
+.logo-box img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
-
+/* Estilo para los campos de entrada */
 .input-group {
-    margin: 15px 0;
+    margin-bottom: 15px;
     text-align: left;
 }
 
 .input-group label {
     display: block;
     margin-bottom: 5px;
+    font-size: 14px;
     color: #333;
 }
 
 .input-group input {
     width: 100%;
     padding: 10px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
-.input-group button {
+/* Estilo para el botón de alternar contraseña */
+#togglePassword {
     background: none;
     border: none;
     cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
 }
 
+/* Estilo para el botón de inicio de sesión */
 button[type="submit"] {
-    background-color: #007BFF;
-    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
+    transition: background-color 0.3s;
 }
 
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-#forgotPassword {
-    color: #007BFF;
-    text-decoration: none;
-    font-size: 0.9em;
-}
-
-#forgotPassword:hover {
-    text-decoration: underline;
-}
-
+/* Mensaje de error */
 #error-message {
-    margin-top: 10px;
-    font-size: 0.9em;
     color: red;
+    font-size: 14px;
     display: none;
+    margin-bottom: 15px;
 }
