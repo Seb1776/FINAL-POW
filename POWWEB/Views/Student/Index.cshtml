@@ -1,0 +1,49 @@
+﻿@model StudentViewModel
+
+@if (TempData["StudentDeleted"] != null)
+{
+    <p class="text-success">@TempData["StudentDeleted"]</p>
+}
+
+@if (!Model.Students.Any())
+{
+    <p>No Results</p>
+}
+
+else
+{
+    <table class="table table-condensed table-bordered">
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Password
+            </th>
+        </tr>
+        
+        @foreach (var s in Model.Students)
+        {
+            <tr>
+                <td>@s.studentName</td>
+                <td>@s.studentLastName</td>
+                <td>@s.username</td>
+                <td>@s.password</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@s.Id.ToString()">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@s.Id.ToString()">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<p>
+    <a class="btn btn-primary" asp-action="Add">Add New Student</a>
+</p>

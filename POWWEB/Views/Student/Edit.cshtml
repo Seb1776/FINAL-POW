@@ -1,0 +1,44 @@
+﻿@model StudentAddViewModel
+
+<h2>Updating @Model.Student.studentName</h2>
+<hr />
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <p class="text-danger">@ViewData["ErrorMessage"]</p>
+}
+
+<form method="post" asp-controller="Student" asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Student.Id" />
+    
+    <div class="mb-3">
+        <label asp-for="Student.username" class="form-label"></label>
+        <input asp-for="Student.username" class="form-control" />
+        <span asp-validation-for="Student.username" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Student.password" class="form-label"></label>
+        <input asp-for="Student.password" class="form-control" />
+        <span asp-validation-for="Student.password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Student.studentName" class="form-label"></label>
+        <input asp-for="Student.studentName" class="form-control" />
+        <span asp-validation-for="Student.studentName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Student.studentLastName" class="form-label"></label>
+        <input asp-for="Student.studentLastName" class="form-control" />
+        <span asp-validation-for="Student.studentLastName" class="text-danger"></span>
+    </div>
+    
+    <input type="submit" value="Update Student" class="btn btn-primary" />
+</form>
+
+<div>
+    <a asp-controller="Student" asp-action="Index">Back to List</a>
+</div>

@@ -1,12 +1,18 @@
+using Microsoft.EntityFrameworkCore;
 using POWAPI.Models;
-using WebApplication1.Controllers;
+using POWAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddIdentity<User, Role>().AddMongoDbStores<User, Role, Guid>
-(
-    "mongodb+srv://sebastianwho1776:lakezurich123@powcluster.vgn3vfq.mongodb.net/?retryWrites=true&w=majority&appName=POWCluster", "pow"
-);
+var mongoSettings = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
+
+builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddSingleton<MongoDBService>();
+
+builder.Services.AddDbContext<StudentDbContext>(options =>
+    options.UseMongoDB(mongoSettings?.ConnectionURI ?? "", mongoSettings?.DatabaseName ?? ""));
+
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

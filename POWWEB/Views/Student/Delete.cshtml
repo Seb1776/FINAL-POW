@@ -1,0 +1,48 @@
+﻿@model Student
+
+<h2>Deleting @Model.studentName</h2>
+<hr />
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <p class="text-danger">@ViewData["ErrorMessage"]</p>
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            <label asp-for="studentName">Name</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.studentName;
+        </dd>
+        <dt class="col-sm-4">
+            <label asp-for="studentLastName">Last Name</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.studentLastName;
+        </dd>
+        <dt class="col-sm-4">
+            <label asp-for="username">Username</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.username;
+        </dd>
+        <dt class="col-sm-4">
+            <label asp-for="password">Password</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.password;
+        </dd>
+    </dl>
+</div>
+
+<form method="post" asp-action="Delete">
+    <input type="hidden" asp-for="Id"/>
+    <input type="submit" value="Delete Student" class="btn btn-danger" 
+           onclick="javascript: return confirm('Are you sure you want to delete this Student?);')" />
+</form>
+
+<div>
+    <a asp-controller="Student" asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,6 @@
+@POWAPI_HostAddress = http://localhost:5103
+
+GET {{POWAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
