@@ -56,7 +56,12 @@ public class StudentController : Controller
             return NotFound();
         
         var selectedStudent = _studentService.GetStudentById(id);
-        return View(selectedStudent);
+        var viewModel = new StudentAddViewModel
+        {
+            Student = selectedStudent
+        };
+        
+        return View(viewModel);
     }
 
     [HttpPost]
@@ -78,8 +83,13 @@ public class StudentController : Controller
         {
             ModelState.AddModelError("", $"Update failed! {ex.Message}");
         }
+        
+        var viewModel = new StudentAddViewModel
+        {
+            Student = student
+        };
 
-        return View(student);
+        return View(viewModel);
     }
 
     public IActionResult Delete(ObjectId id)

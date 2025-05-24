@@ -37,49 +37,42 @@ public class StudentService : IStudentService
 
     public void DeleteStudent(Student student)
     {
-        _studentDbContext.Remove(student);
-        _studentDbContext.ChangeTracker.DetectChanges();
-        Console.WriteLine(_studentDbContext.ChangeTracker.DebugView.LongView);
-        _studentDbContext.SaveChanges();
-    }
+        var studentToDelete = _studentDbContext.Students.FirstOrDefault(s => s.Id == student.Id);
 
-    public void DeleteStudent(string id)
-    {
-        var studentToDelete = _studentDbContext.Students.FirstOrDefault(s => s.Id.Equals(id));
-            
         if (studentToDelete != null)
-            DeleteStudent(studentToDelete);
+        {
+            _studentDbContext.Students.Remove(studentToDelete);
+            _studentDbContext.ChangeTracker.DetectChanges();
+            Console.WriteLine(_studentDbContext.ChangeTracker.DebugView.LongView);
+            _studentDbContext.SaveChanges();
+        }
 
         else
-            throw new ArgumentException("Student to delete cannot be found");
+            throw new AggregateException("Student to delete cannot be found");
     }
 
     public void UpdateStudent(Student student)
     {
-        var studentToUpdate = new Student
-        {
-            username = student.username,
-            password = student.password,
-            studentName = student.studentName,
-            studentLastName = student.studentLastName
-        };
+        var studentToUpdate = _studentDbContext.Students.FirstOrDefault(s => s.Id == student.Id);
 
-        _studentDbContext.Students.Update(studentToUpdate);
-        _studentDbContext.ChangeTracker.DetectChanges();
-        Console.WriteLine(_studentDbContext.ChangeTracker.DebugView.LongView);
-        _studentDbContext.SaveChanges();
-        
-        //var studentToUpdate = _studentDbContext.Students.FirstOrDefault(s => s.Id == id);
-    }
-
-    public void UpdateStudent(string id)
-    {
-        var studentToUpdate = _studentDbContext.Students.FirstOrDefault(s => s.Id.Equals(id));
-            
         if (studentToUpdate != null)
-            UpdateStudent(studentToUpdate);
+        {
+            studentToUpdate.username = student.username;
+            studentToUpdate.studentLastName = student.studentLastName;
+            studentToUpdate.password = student.password;
+            studentToUpdate.studentName = student.studentName;
+
+            _studentDbContext.Students.Update(studentToUpdate);
+            
+            _studentDbContext.ChangeTracker.DetectChanges();
+            Console.WriteLine(_studentDbContext.ChangeTracker.DebugView.LongView);
+
+            _studentDbContext.SaveChanges();
+        }
 
         else
+        {
             throw new ArgumentException("Student to update cannot be found");
+        }
     }
 }

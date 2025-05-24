@@ -9,7 +9,5 @@ public interface IStudentService
     Student? GetStudentById(ObjectId id);
     void AddStudent(Student newStudent);
     void UpdateStudent(Student updatedStudent);
-    void UpdateStudent(string id);
     void DeleteStudent(Student studentToDelete);
-    void DeleteStudent(string id);
 }
