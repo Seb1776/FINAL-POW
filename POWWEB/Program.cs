@@ -1,4 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using POWAPI.Services;
+using POWAPI.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var mongoSettings = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>();
+
+builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddSingleton<MongoDBService>();
+
+builder.Services.AddDbContext<StudentDbContext>(options =>
+    options.UseMongoDB(mongoSettings?.ConnectionURI ?? "", mongoSettings?.DatabaseName ?? ""));
+
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

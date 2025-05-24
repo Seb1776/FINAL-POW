@@ -7,8 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
       <PackageReference Include="MongoDB.EntityFrameworkCore" Version="9.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\POWAPI\POWAPI.csproj" />
     </ItemGroup>
 
 </Project>

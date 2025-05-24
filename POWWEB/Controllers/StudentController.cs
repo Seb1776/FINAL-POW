@@ -1,15 +1,123 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using Newtonsoft.Json;
-using POWWEB.Models;
+using POWAPI.Models;
+using POWAPI.Services;
 using POWWEB.ViewModels;
 
 namespace POWWEB.Controllers;
 
 public class StudentController : Controller
 {
-    private Uri baseAddress = new Uri("https://localhost:7233/api");
+    private readonly IStudentService _studentService;
+
+    public StudentController(IStudentService studentService)
+    {
+        _studentService = studentService;
+    }
+
+    public IActionResult Index()
+    {
+        var viewModel = new StudentViewModel
+        {
+            Students = _studentService.GetAllStudents()
+        };
+        
+        return View(viewModel);
+    }
+
+    public IActionResult Add()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Add(StudentAddViewModel studentAddViewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var newRestaurant = new Student
+            {
+                username = studentAddViewModel.Student.username,
+                password = studentAddViewModel.Student.password,
+                studentName = studentAddViewModel.Student.studentName,
+                studentLastName = studentAddViewModel.Student.studentLastName
+            };
+            
+            _studentService.AddStudent(newRestaurant);
+            return RedirectToAction("Index");
+        }
+        
+        return View(studentAddViewModel);
+    }
+
+    public IActionResult Edit(ObjectId id)
+    {
+        if (id == ObjectId.Empty)
+            return NotFound();
+        
+        var selectedStudent = _studentService.GetStudentById(id);
+        return View(selectedStudent);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Student student)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                _studentService.UpdateStudent(student);
+                return RedirectToAction("Index");
+            }
+
+            else
+                return BadRequest();
+        }
+
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", $"Update failed! {ex.Message}");
+        }
+
+        return View(student);
+    }
+
+    public IActionResult Delete(ObjectId id)
+    {
+        if (id == ObjectId.Empty)
+            return NotFound();
+        
+        var selectedStudent = _studentService.GetStudentById(id);
+        return View(selectedStudent);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(Student student)
+    {
+        if (student.Id == ObjectId.Empty)
+        {
+            ViewData["ErrorMessage"] = "Delete failed!";
+            return View();
+        }
+
+        try
+        {
+            _studentService.DeleteStudent(student);
+            TempData["StudentDeleted"] = "Student deleted!";
+
+            return RedirectToAction("Index");
+        }
+
+        catch (Exception ex)
+        {
+            ViewData["ErrorMessage"] = $"Delete failed! {ex.Message}";
+        }
+
+        var selectedStudent = _studentService.GetStudentById(student.Id);
+        return View(selectedStudent);
+    }
+    
+    /*private Uri baseAddress = new Uri("https://localhost:7233/api");
     private readonly HttpClient _client;
 
     public StudentController()
@@ -171,5 +279,5 @@ public class StudentController : Controller
         }
 
         return View(student);
-    }
+    }*/
 }

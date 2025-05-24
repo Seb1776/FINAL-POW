@@ -1,4 +1,4 @@
-﻿using POWWEB.Models;
+﻿using POWAPI.Models;
 
 namespace POWWEB.ViewModels;
 

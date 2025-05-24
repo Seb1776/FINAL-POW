@@ -11,7 +11,7 @@ public class Student
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public ObjectId? Id { get; set; }
+    public ObjectId Id { get; set; }
     
     [Display(Name = "Username")]
     public string username { get; set; } = null!;

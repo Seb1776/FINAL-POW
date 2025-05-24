@@ -7,7 +7,6 @@ public interface IStudentService
 {
     IEnumerable<Student> GetAllStudents();
     Student? GetStudentById(ObjectId id);
-    Student? GetStudentById(string id);
     void AddStudent(Student newStudent);
     void UpdateStudent(Student updatedStudent);
     void UpdateStudent(string id);

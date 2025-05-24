@@ -19,14 +19,10 @@ public class StudentService : IStudentService
             .Take(20).AsNoTracking().AsEnumerable();
     }
 
-    public Student? GetStudentById(string id)
-    {
-        return _studentDbContext.Students.FirstOrDefault(s => s.Id.Equals(id));
-    }
-
     public Student? GetStudentById(ObjectId id)
     {
-        return GetStudentById(id.ToString());
+        return _studentDbContext.Students.FirstOrDefault(s => s.Id == id
+        );
     }
 
     public void AddStudent(Student student)
